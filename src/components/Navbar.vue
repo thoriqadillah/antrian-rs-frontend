@@ -1,27 +1,22 @@
 <template>
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-    <div class="navbar-brand">
+    <div>
       <a href="#" class="navbar-brand">VUE</a>
     </div>
 
-    <div id="navLink">
+    <div id="navLinks">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" v-for="link in navLinks" :key="link">
             <router-link :to="{ name: link.path }" class="nav-link" @click="setActive()">{{ link.name }}</router-link>
           </li>
+          <li class="nav-item" v-for="auth in authLinks" :key="auth">
+            <router-link :to="{ name: auth.path }" class="nav-link">{{ auth.name }}</router-link>
+          </li>
         </ul>
       </div>  
-    </div>
-
-    <div id="auth">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-for="auth in authLinks" :key="auth">
-          <router-link :to="{ name: auth.path }" class="nav-link">{{ auth.name }}</router-link>
-        </li>
-      </ul>
-    </div>
+    </div>    
   </nav>  
 </div>
 </template>
@@ -49,5 +44,10 @@ export default {
 .active {
   color: #06B6D4 !important;
   font-weight: bold;
+}
+.navbar-brand {
+  font-weight: bolder;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #06B6D4;
 }
 </style>
