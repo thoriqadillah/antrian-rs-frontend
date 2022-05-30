@@ -2,20 +2,14 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
     <div class="navbar-brand">
-      <router-link :to = "{ name: 'index' }" class="navbar-brand">SI PALING VUE JS</router-link>
+      <a href="#" class="navbar-brand">VUE</a>
     </div>
 
     <div id="navLink">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <router-link :to="{ name: 'index' }" class="nav-link ">HOME</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'antrian' }" class="nav-link">ANTRIAN</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'poli' }" class="nav-link">POLIKLINIK</router-link>
+          <li class="nav-item" v-for="link in navLinks" :key="link">
+            <router-link :to="{ name: link.path }" class="nav-link" @click="setActive()">{{ link.name }}</router-link>
           </li>
         </ul>
       </div>  
@@ -23,11 +17,8 @@
 
     <div id="auth">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'auth.login' }" class="nav-link">LOGIN</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'auth.register' }" class="nav-link">DAFTAR</router-link>
+        <li class="nav-item" v-for="auth in authLinks" :key="auth">
+          <router-link :to="{ name: auth.path }" class="nav-link">{{ auth.name }}</router-link>
         </li>
       </ul>
     </div>
@@ -37,7 +28,26 @@
 
 <script>
 export default {
-  
   name: 'Navbar',
+  data() {
+    return {
+      navLinks: [
+        { name: 'Home', path: 'index' }, 
+        { name: 'Antrian', path: 'antrian' },
+        { name: 'Poliklinik', path: 'poli' }
+      ],
+      authLinks: [
+        { name: 'Login', path: 'auth.login' }, 
+        { name: 'Register', path: 'auth.register' },
+      ],
+    }
+  },
 }
 </script>
+
+<style scoped>
+.active {
+  color: #06B6D4 !important;
+  font-weight: bold;
+}
+</style>
