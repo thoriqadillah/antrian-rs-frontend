@@ -1,27 +1,41 @@
 <template>
-    <form class="px-3 py-5 rounded">
-        <div class="form-group mb-3 pr-4" v-for="input in forms" :key="input">
-            <input type="email" class="form-control no-border shadow-lg py-2" aria-describedby="emailHelp" v-model="input.value" :placeholder="input.placeholder">
+    <div class="form-group mb-3 pr-4" v-for="input in inputs" :key="input">
+        <div v-if="input.name == 'email'">
+            <input type="email" class="form-control no-border shadow-lg py-2" aria-describedby="emailHelp" v-model="input.value" :placeholder="input.placeholder" required>
         </div>
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary shadow-lg green">{{ btnText }}</button>
+        <div v-else-if="input.name == 'password'">
+            <input type="password" class="form-control no-border shadow-lg py-2" v-model="input.value" :placeholder="input.placeholder" required>
         </div>
-    </form>
+        <div v-else-if="input.name == 'poli'">
+            <select class="form-select" v-model="input.value" required>
+                <option disabled value="">Poliklinik</option>
+                <option>One</option>
+                <option>Two</option>
+                <option>Three</option>
+            </select>
+        </div>
+        <div v-else>
+            <input class="form-control no-border shadow-lg py-2" v-model="input.value" :placeholder="input.placeholder" required>
+        </div>
+    </div>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary shadow-lg green">{{ btnText }}</button>
+    </div>
 </template>
 
 <script>
 export default {
-    props: ['forms', 'btnText']
+    props: ['inputs', 'btnText', 'submitHandler'],
 }
 </script>
 
-<style>
-.green {
-    background: #42b883;
-    border: #42b883;
+<style scoped>
+.btn-primary {
+    background: #42b883 !important;
+    border: #42b883 !important;
 }
 
-.green:hover {
-    background: #4ADE80;
+.btn-primary:hover {
+    background: #4ADE80 !important;
 }
 </style>
