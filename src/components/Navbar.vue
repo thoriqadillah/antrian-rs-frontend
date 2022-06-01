@@ -4,7 +4,7 @@
     <div>
       <a href="#" class="navbar-brand">VUE</a>
     </div>
-
+    
     <div id="navLinks">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -42,12 +42,12 @@ export default {
 
 <style scoped>
 .active {
-  color: #06B6D4 !important;
+  color: #42b883 !important;
   font-weight: bold;
 }
 .navbar-brand {
   font-weight: bolder;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: #06B6D4;
+  color: #42b883;
 }
 </style>
