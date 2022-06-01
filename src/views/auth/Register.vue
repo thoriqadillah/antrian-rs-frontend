@@ -1,12 +1,13 @@
 <template>
 <Navbar></Navbar>
 <div class="container">
-  <div class="row align-items-center" style="height: 90vh;">
-    <div class="col-8 text-center">
-        <img src="./../../assets/logo.png" alt="logo">
-    </div>
-    <div class="col-4">
-      <FormGenerator :forms="forms" :btn-text="btnText"></FormGenerator>
+  <div class="d-flex justify-content-between align-items-center" style="height: 90vh;">
+    <div></div>
+    <div><img src="./../../assets/logo.png" alt="logo"></div>
+    <div>
+      <form class="px-3 py-5 rounded" @submit.prevent="submit">
+        <FormGenerator :inputs="forms" :btn-text="btnText"></FormGenerator>
+      </form>
     </div>
   </div>
 </div>
@@ -15,18 +16,39 @@
 <script>
 import Navbar from "../../components/Navbar.vue";
 import FormGenerator from "../../components/FormGenerator.vue";
+import { reactive } from '@vue/reactivity';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     components: {
       Navbar, FormGenerator
     },
+    setup() {
+      let forms = reactive([
+          { placeholder: 'Username', value: '', name: 'username', isValid: true, valMsg: '' },
+          { placeholder: 'Email', value: '', name: 'email', isValid: true, valMsg: ''  },
+          { placeholder: 'Password', value: '', name: 'password', isValid: true, valMsg: ''  },
+      ])
+      
+      const router = useRouter()
+
+      const submit = async () => {
+        const REGISTER_API = 'http://127.0.0.1:8000/api/register'
+        
+        const res = await axios.post(REGISTER_API, { 
+          name: forms[0].value,
+          email: forms[1].value,
+          password: forms[2].value
+        })
+
+        router.push('/login')
+      }
+
+      return { forms, submit }
+    },
     data() {
       return {
-        forms: [
-          { placeholder: 'Username', value: '', name: 'username' },
-          { placeholder: 'Email', value: '', name: 'email' },
-          { placeholder: 'Password', value: '', name: 'password' },
-        ],
         btnText: 'Register'
       }
     },
