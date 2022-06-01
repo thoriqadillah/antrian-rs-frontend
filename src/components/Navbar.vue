@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" v-for="link in navLinks" :key="link">
-            <router-link :to="{ name: link.path }" class="nav-link" @click="setActive()">{{ link.name }}</router-link>
+            <router-link :to="{ name: link.path }" class="nav-link">{{ link.name }}</router-link>
           </li>
           <li class="nav-item" v-for="auth in authLinks" :key="auth">
             <router-link :to="{ name: auth.path }" class="nav-link">{{ auth.name }}</router-link>
