@@ -17,32 +17,31 @@
 import Navbar from "../../components/Navbar.vue";
 import FormGenerator from "../../components/FormGenerator.vue";
 import { reactive } from '@vue/reactivity';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
+import authService from '../../services/auth.service'
 
 export default {
     components: {
       Navbar, FormGenerator
     },
     setup() {
-      let forms = reactive([
-          { placeholder: 'Username', value: '', name: 'username', isValid: true, valMsg: '' },
-          { placeholder: 'Email', value: '', name: 'email', isValid: true, valMsg: ''  },
-          { placeholder: 'Password', value: '', name: 'password', isValid: true, valMsg: ''  },
-      ])
-      
       const router = useRouter()
 
+      let forms = reactive([
+          { placeholder: 'Username', value: '', name: 'username'},
+          { placeholder: 'Email', value: '', name: 'email' },
+          { placeholder: 'Password', value: '', name: 'password' },
+      ])
+      
       const submit = async () => {
-        const REGISTER_API = 'http://127.0.0.1:8000/api/register'
-        
-        const res = await axios.post(REGISTER_API, { 
+        const user = {
           name: forms[0].value,
           email: forms[1].value,
           password: forms[2].value
-        })
+        }
 
-        router.push('/login')
+        const { status } = authService.register(user)
+        if (status == 200) router.push('/login')
       }
 
       return { forms, submit }

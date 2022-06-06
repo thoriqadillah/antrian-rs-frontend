@@ -1,5 +1,5 @@
 <template>
-<Navbar :isLoggedin="isLoggedIn"></Navbar>
+<Navbar></Navbar>
 <div class="container">
   <div class="d-flex justify-content-between align-items-center" style="height: 90vh;">
     <div></div>
@@ -16,23 +16,30 @@
 <script>
 import Navbar from "../../components/Navbar.vue";
 import FormGenerator from "../../components/FormGenerator.vue";
-
 import { reactive } from 'vue';
-import axios from 'axios';
+import { useRouter } from 'vue-router';
+import authService from '../../services/auth.service'
 
 export default {
     components: {
       Navbar, FormGenerator
     },
     setup() {
+      const router = useRouter()
+
       const inputs = reactive([
           { placeholder: 'Email', value: '', name: 'email' },
           { placeholder: 'Password', value: '', name: 'password' },
       ])
 
       const submit = async () => {
-        const LOGIN_API = 'http://127.0.0.1:8000/api/login'
+        const user = {
+          email: inputs[0].value,
+          password: inputs[1].value
+        }
         
+        const { status } = await authService.login(user)
+        if (status == 200) router.push('/')
       }
 
       return { inputs, submit }
@@ -40,7 +47,6 @@ export default {
     data() {
       return {
         btnText: 'Login',
-        isLoggedIn: false
       }
     },
 }
