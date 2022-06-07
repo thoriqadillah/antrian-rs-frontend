@@ -1,10 +1,6 @@
-import { useRouter } from 'vue-router';
 import axios from "axios";
 
 class AuthService {
-    #token = '';
-    #router = useRouter()
-
     async register(user) {
         try {
             const res = await axios.post('register', {
@@ -26,9 +22,9 @@ class AuthService {
                 password: user.password
             })
             
-            this.#token = res.data.authorisation.token
-            if (this.#token) {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${this.#token}`
+            const { status, data } = res
+            if (status == 200) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${data.authorisation.token}`
             }
             
             return res
@@ -37,12 +33,33 @@ class AuthService {
         }
     }
 
-    refresh() {
-        
+    async refresh() {
+        try {
+            const res = await axios.post('refresh')
+            const { status, data } = res
+            if (status == 200) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${data.authorisation.token}`
+                return true
+            }
+
+            return false
+        } catch (err) {
+            console.log(err)
+            return false
+        }
     }
 
-    logout() {
-        this.#token = ''
+    async logout() {
+        try {
+            const { status } = await axios.post('logout')
+            if (status == 200) return true
+
+            return false
+
+        } catch (error) {
+            console.log(error)
+            return false
+        }
     }
 }
 
