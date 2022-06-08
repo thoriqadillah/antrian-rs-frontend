@@ -11,7 +11,7 @@
     
     <div>
       <form class="px-3 py-5 rounded" @submit.prevent="getAntrian">
-        <FormGenerator :btnText="btnText" :inputs="forms"></FormGenerator>
+        <FormGenerator :btnText="btnText" :inputs="forms" :poliklinik="antrianPoli"></FormGenerator>
       </form>
     </div>
   </div>
@@ -21,8 +21,11 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import FormGenerator from "../components/FormGenerator.vue"
-import { reactive } from '@vue/reactivity';
+import { reactive, ref } from '@vue/reactivity';
 import rsService from '../services/rs.service'
+import authService from '@/services/auth.service';
+import { computed, onMounted } from '@vue/runtime-core';
+import store from '@/store';
 
 export default {
     components: {
@@ -49,6 +52,7 @@ export default {
       this.nomorAntrian = nomor
       this.antrianPoli = polis
     },
+    computed
 }
 </script>
 

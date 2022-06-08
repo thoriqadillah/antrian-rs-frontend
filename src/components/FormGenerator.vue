@@ -9,9 +9,7 @@
         <div v-else-if="input.name == 'poli'">
             <select class="form-select" v-model="input.value" required>
                 <option disabled value="">Poliklinik</option>
-                <option>One</option>
-                <option>Two</option>
-                <option>Three</option>
+                <option v-for="poli in poliklinik" :key="poli">{{ poli.nama_poli }}</option>
             </select>
         </div>
         <div v-else>
@@ -25,7 +23,7 @@
 
 <script>
 export default {
-    props: ['inputs', 'btnText', 'submitHandler'],
+    props: ['inputs', 'btnText', 'submitHandler', 'poliklinik'],
 }
 </script>
 
