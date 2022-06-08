@@ -35,14 +35,15 @@ export default {
       ])
 
       const submit = async () => {
-        const user = {
+        const userInput = {
           email: inputs[0].value,
           password: inputs[1].value
         }
         
-        const { status } = await authService.login(user)
+        const { status, data } = await authService.login(userInput)
         if (status == 200) {
           store.dispatch('authenticateUser', true)
+          store.dispatch('saveUser', data.user)
           router.push('/')
         }
       }
