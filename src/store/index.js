@@ -3,14 +3,17 @@ import { createStore } from "vuex";
 export default createStore({
     state() {
         return {
-            authenticated: false
+            authenticated: false,
+            user: null
         }
     }, 
     mutations: {
-        setAuth: (state, auth) => state.authenticated = auth
+        setAuth: (state, auth) => state.authenticated = auth,
+        getUser: (state, user) => state.user = user
     },
     actions: {
-        authenticateUser: ({ commit }, auth) => commit('setAuth', auth) //sebuah function untuk commit suatu perubahan
+        authenticateUser: ({ commit }, auth) => commit('setAuth', auth), //sebuah function untuk commit suatu perubahan
+        saveUser: ({ commit }, user) => commit('getUser', user)
     },
     modules: {
 
