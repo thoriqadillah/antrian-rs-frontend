@@ -61,6 +61,17 @@ class AuthService {
             return false
         }
     }
+
+    async getUser() {
+        try {
+            const { status, data } = await axios.get('user')
+            if (status == 200) return data
+
+            return null
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default new AuthService
