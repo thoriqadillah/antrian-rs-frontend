@@ -19,6 +19,7 @@ import FormGenerator from "../../components/FormGenerator.vue";
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import authService from '../../services/auth.service'
+import { useStore } from 'vuex';
 
 export default {
     components: {
@@ -26,6 +27,7 @@ export default {
     },
     setup() {
       const router = useRouter()
+      const store = useStore()
 
       const inputs = reactive([
           { placeholder: 'Email', value: '', name: 'email' },
@@ -39,7 +41,10 @@ export default {
         }
         
         const { status } = await authService.login(user)
-        if (status == 200) router.push('/')
+        if (status == 200) {
+          store.dispatch('authenticateUser', true)
+          router.push('/')
+        }
       }
 
       return { inputs, submit }

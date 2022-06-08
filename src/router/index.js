@@ -25,6 +25,10 @@ const routes = [
         path: '/register',
         name: 'auth.register',
         component: () => import("../views/auth/Register.vue")
+    },
+    {
+        path: '/logout',
+        name: 'auth.logout'
     }
 ]
 
