@@ -61,7 +61,6 @@ export default {
       const { nomor, polis } = await rsService.getAntrian()
       this.nomorAntrian = nomor
       this.antrianPoli = polis
-      console.log(nomor, polis)
 
       this.user = this.$store.state.user
     },
