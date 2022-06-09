@@ -9,8 +9,12 @@
         <div v-else-if="input.name == 'poli'">
             <select class="form-select" v-model="input.value" required>
                 <option disabled value="">Poliklinik</option>
-                <option v-for="poli in poliklinik" :key="poli">{{ poli.nama_poli }}</option>
+                <option v-for="poli in poliklinik" :key="poli" :value="poli.id">{{ poli.nama_poli }}</option>
             </select>
+        </div>
+        <div v-else-if="input.name == 'nama'">
+            <input v-if="user" class="form-control no-border shadow-lg py-2" :value="user.name" :placeholder="input.placeholder" disabled>
+            <input v-else class="form-control no-border shadow-lg py-2" :placeholder="input.placeholder" required >
         </div>
         <div v-else>
             <input class="form-control no-border shadow-lg py-2" v-model="input.value" :placeholder="input.placeholder" required>
@@ -23,7 +27,7 @@
 
 <script>
 export default {
-    props: ['inputs', 'btnText', 'submitHandler', 'poliklinik'],
+    props: ['inputs', 'btnText', 'submitHandler', 'poliklinik', 'user'],
 }
 </script>
 

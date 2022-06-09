@@ -6,12 +6,12 @@
       <div class="border text-center px-4 py-3 bg-light rounded-5">
         {{ poli.nama_poli }}
       </div>
-      <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index] }}</h2>
+      <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index].nomor }}</h2>
     </div>
     
     <div>
-      <form class="px-3 py-5 rounded" @submit.prevent="getAntrian">
-        <FormGenerator :btnText="btnText" :inputs="forms" :poliklinik="antrianPoli"></FormGenerator>
+      <form class="px-3 py-5 rounded" @submit.prevent="submit">
+        <FormGenerator :btnText="btnText" :inputs="forms" :poliklinik="antrianPoli" :user="user"></FormGenerator>
       </form>
     </div>
   </div>
@@ -21,38 +21,50 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import FormGenerator from "../components/FormGenerator.vue"
-import { reactive, ref } from '@vue/reactivity';
 import rsService from '../services/rs.service'
-import authService from '@/services/auth.service';
-import { computed, onMounted } from '@vue/runtime-core';
-import store from '@/store';
+import userService from '../services/user.service'
+import { useRouter } from 'vue-router';
 
 export default {
     components: {
       Navbar, FormGenerator
     },
-    setup() {
-      const forms = reactive([
-          { placeholder: 'Nama Lengkap', value: '', name: 'nama' },
-          { placeholder: 'Tanggal', value: '', name: 'tanggal' },
-          { placeholder: 'Poliklinik', value: '', name: 'poli' },
-        ])
-      
-      return { forms }
-    },
     data() {
       return {
+        forms: [
+          { placeholder: 'Nama Lengkap', value: '', name: 'nama' },
+          { placeholder: 'dd-mm-yyyy', value: '', name: 'tanggal' },
+          { placeholder: 'Poliklinik', value: '', name: 'poli' },
+        ],
         btnText: 'Daftar Antrian',
         nomorAntrian: [],
-        antrianPoli: []
+        antrianPoli: [],
+        user: null
+      }
+    },
+    methods: {
+      async submit() {
+        const router = useRouter()
+        const formInput = {
+          user_id: this.user.id,
+          poli_id: this.forms[2].value,
+          nama: this.user.name,
+          tanggal: this.forms[1].value,
+        }
+        
+        const { status } = await userService.daftarAntrian(formInput)
+        if (status == 200) router.push('/antrian')
+        
       }
     },
     async mounted() {
       const { nomor, polis } = await rsService.getAntrian()
       this.nomorAntrian = nomor
       this.antrianPoli = polis
+      console.log(nomor, polis)
+
+      this.user = this.$store.state.user
     },
-    computed
 }
 </script>
 

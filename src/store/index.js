@@ -9,11 +9,11 @@ export default createStore({
     }, 
     mutations: {
         setAuth: (state, auth) => state.authenticated = auth,
-        getUser: (state, user) => state.user = user
+        setUser: (state, user) => state.user = user
     },
     actions: {
         authenticateUser: ({ commit }, auth) => commit('setAuth', auth), //sebuah function untuk commit suatu perubahan
-        saveUser: ({ commit }, user) => commit('getUser', user)
+        saveUser: ({ commit }, user) => commit('setUser', user)
     },
     modules: {
 
