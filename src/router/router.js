@@ -28,7 +28,7 @@ const routes = [
     },
     {
         path: '/logout',
-        name: 'auth.logout'
+        redirect: '/login' 
     }
 ]
 
