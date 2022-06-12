@@ -13,8 +13,7 @@ class RsService {
   async getPoli() {
     try {
       const res = await axios.get("get-poli");
-      // return res.data;
-      console.log(res);
+      return res.data.data  
     } catch (error) {
       console.log(error);
     }

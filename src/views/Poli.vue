@@ -2,16 +2,14 @@
   <Navbar></Navbar>
   <div class="container">
     <div class="row">
-      <!-- <div v-for="ds in deskripsiPoli" :key="ds">
-        <div class="col-sm">
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">{{ namaPoli }}</h2>
-              <p class="card-text">{{ deskripsiPoli }}</p>
-            </div>
+      <div v-for="poli in poliklinik" :key="poli" class="col-sm align-items-center pt-5" style="height: 90vh">
+        <div class="card" style="width: 18rem">
+          <div class="card-body">
+            <h2 class="card-title">{{ poli.nama_poli }}</h2>
+            <p class="card-text">{{ poli.deskripsi }}</p>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -26,15 +24,12 @@ export default {
   },
   data() {
     return {
-      namaPoli: [],
-      deskripsiPoli: [],
+      poliklinik: undefined
     };
   },
   async mounted() {
-    const rest = await rsService.getPoli();
-    console.log(rest);
-    // this.namaPoli = nama;
-    // this.deskripsiPoli = deskripsi;
+    const res = await rsService.getPoli();
+    this.poliklinik = res
   },
 };
 </script>
