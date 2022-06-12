@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <Navbar></Navbar>
   <div class="container">
     <div class="d-flex justify-content-between align-items-center" style="height: 90vh">
@@ -14,12 +15,36 @@
           <FormGenerator :btnText="btnText" :inputs="forms" :poliklinik="antrianPoli" :user="user"></FormGenerator>
         </form>
       </div>
+=======
+<Navbar></Navbar>
+<div class="container">
+  <div v-if="authenticated  && terdaftar">
+    <div class="card border-success px-3 pt-3 pb-1">
+      Nomor antrian Anda
+      <h2 class="fw-bolder" >{{ antrianUser }}</h2>
+      <p>untuk {{ tanggal }}</p>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between align-items-center" :style="[authenticated  && terdaftar ? 'height: 50vh;' : 'height: 90vh;' ]">
+    <div v-for="poli, index in antrianPoli" :key="poli">
+      <div class="border text-center px-4 py-3 bg-light rounded-5">
+        {{ poli.nama_poli }}
+      </div>
+      <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index].nomor }}</h2>
+    </div>
+    
+    <div v-if="!terdaftar">
+      <form class="px-3 py-5 rounded" @submit.prevent="submit">
+        <FormGenerator :btnText="btnText" :inputs="forms" :poliklinik="antrianPoli" :user="user" :tanggal="tanggal"></FormGenerator>
+      </form>
+>>>>>>> 62ecabd115f940c5ea1537a9476354f915fbfc58
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from "../components/Navbar.vue";
+<<<<<<< HEAD
 import FormGenerator from "../components/FormGenerator.vue";
 import rsService from "../services/rs.service";
 import userService from "../services/user.service";
@@ -55,6 +80,74 @@ export default {
 
       const { status } = await userService.daftarAntrian(formInput);
       if (status == 200) router.push("/antrian");
+=======
+import FormGenerator from "../components/FormGenerator.vue"
+import rsService from '../services/rs.service'
+import userService from '../services/user.service'
+
+export default {
+    components: {
+      Navbar, FormGenerator
+    },
+    data() {
+      return {
+        forms: [
+          { placeholder: 'Nama Lengkap', value: '', name: 'nama' },
+          { placeholder: 'dd-mm-yyyy', value: '', name: 'tanggal' },
+          { placeholder: 'Poliklinik', value: '', name: 'poli' },
+        ],
+        btnText: 'Daftar Antrian',
+        nomorAntrian: [],
+        antrianPoli: [],
+        user: null,
+        authenticated: this.$store.state.authenticated,
+        tanggal: '',
+        antrianUser: '',
+        terdaftar: false
+      }
+    },
+    methods: {
+      async submit() {
+        const formInput = {
+          user_id: this.user.id,
+          poli_id: this.forms[2].value,
+          nama: this.user.name,
+          tanggal: this.forms[1].value,
+        }
+        
+        const { status } = await userService.daftarAntrian(formInput)
+        if (status == 201) {
+          this.$router.push('/')
+        }
+      },
+      formatDateNow() {
+        let date = new Date()
+        let day = '' + (date.getDate())
+        let month = '' + (date.getMonth() + 1)
+        let year = '' + (date.getFullYear())
+
+        if (day.length < 2) day = '0' + day
+        if (month.length < 2) month = '0' + month
+
+        return [day, month, year].join('-')
+      }
+    },
+    async beforeMount() {
+      const { nomor, polis } = await rsService.getAntrian()
+      this.nomorAntrian = nomor
+      this.antrianPoli = polis
+
+      this.user = this.$store.state.user
+
+      const { status, data } = await userService.getAntrianUser()
+      this.tanggal = this.formatDateNow()
+      if (status == 200 && data.data.length != 0) {
+        console.log(data.data)
+        this.antrianUser = `${data.data.loket} : ${data.data.nomor}`
+        this.terdaftar = true
+      }
+
+>>>>>>> 62ecabd115f940c5ea1537a9476354f915fbfc58
     },
   },
   async mounted() {
