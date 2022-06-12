@@ -16,8 +16,9 @@
             <input v-if="user" class="form-control no-border shadow-lg py-2" :value="user.name" :placeholder="input.placeholder" disabled>
             <input v-else class="form-control no-border shadow-lg py-2" :placeholder="input.placeholder" required >
         </div>
-        <div v-else-if="input.name == 'tanggal'">
-            <input class="form-control no-border shadow-lg py-2" v-model="input.value" :placeholder="tanggal" required>
+        <div v-else-if="input.name == 'tanggal'" >
+            <input v-if="!user" class="form-control no-border shadow-lg py-2" :placeholder="tanggal" required>
+            <input v-else class="form-control no-border shadow-lg py-2" :value="tanggal" required disabled>
         </div>
         <div v-else>
             <input class="form-control no-border shadow-lg py-2" v-model="input.value" :placeholder="input.placeholder" required>

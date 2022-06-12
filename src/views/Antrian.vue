@@ -58,7 +58,7 @@ export default {
           user_id: this.user.id,
           poli_id: this.forms[2].value,
           nama: this.user.name,
-          tanggal: this.forms[1].value,
+          tanggal: this.tanggal,
         }
         
         const { status } = await userService.daftarAntrian(formInput)
