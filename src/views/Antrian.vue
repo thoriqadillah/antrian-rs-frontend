@@ -3,9 +3,14 @@
 <div class="container">
   <div v-if="authenticated  && terdaftar">
     <div class="card border-success px-3 pt-3 pb-1">
-      Nomor antrian Anda
-      <h2 class="fw-bolder" >{{ antrianUser }}</h2>
-      <p>untuk {{ tanggal }}</p>
+      <div class="card-body">
+        <p>Nomor antrian Anda</p>
+        <h2 class="fw-bolder" >{{ antrianUser }}</h2>
+        <p>untuk {{ tanggal }}</p>
+        <div class="text-end">
+          <button class="btn btn-danger" @click="deleteAntrian">X</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="d-flex justify-content-between align-items-center" :style="[authenticated  && terdaftar ? 'height: 50vh;' : 'height: 90vh;' ]">
@@ -76,6 +81,12 @@ export default {
         if (month.length < 2) month = '0' + month
 
         return [day, month, year].join('-')
+      },
+      async deleteAntrian() {
+        const { status } = await userService.deleteAntrian()
+        if (status == 200) {
+          this.terdaftar = false
+        }
       }
     },
     async beforeMount() {
@@ -121,5 +132,8 @@ export default {
 }
 .rounded-5 {
   border-radius: 0.5rem;
+}
+#delete {
+  position: relative;
 }
 </style>

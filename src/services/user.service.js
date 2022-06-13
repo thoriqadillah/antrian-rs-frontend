@@ -20,6 +20,15 @@ class UserService {
             console.log(error)
         }
     }
+
+    async deleteAntrian() {
+        try {
+            const res = await axios.delete('delete-antrian')
+            return res
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default new UserService
