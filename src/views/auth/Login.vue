@@ -44,6 +44,9 @@ export default {
         if (status == 200) {
           store.dispatch('authenticateUser', true)
           store.dispatch('saveUser', data.user)
+          if(data.user.is_admin==1){
+            router.push('/admin')
+          }else
           router.push('/')
         }
       }

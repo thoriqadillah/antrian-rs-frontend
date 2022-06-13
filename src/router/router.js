@@ -32,7 +32,7 @@ const routes = [
   },
   {
     path: "/admin",
-    name: "admin.index",
+    name: "admin",
     component: () => import("../views/admin/Admin.vue"),
   },
 ];
