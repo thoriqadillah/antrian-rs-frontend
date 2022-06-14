@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <div v-for="poli in poliklinik" :key="poli" class="col-sm align-items-center pt-5" style="height: 90vh">
-        <div class="card">
+        <div class="card shadow-lg rounded-5 no-border">
           <div class="card-body">
             <h2 class="card-title">{{ poli.nama_poli }}</h2>
             <p class="card-text">{{ poli.deskripsi }}</p>
@@ -37,9 +37,12 @@ export default {
 <style scoped>
 .card {
   width: 18rem;
-  background-color: #e0e6da;
+  height: 60vh;
+  /* background-color: #e0e6da; */
   box-shadow: 5px 10px #888888;
 }
-
+.rounded-5 {
+  border-radius: 0.5rem;
+}
 </style>
 
