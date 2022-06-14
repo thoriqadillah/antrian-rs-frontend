@@ -40,7 +40,7 @@ export default {
           password: forms[2].value
         }
 
-        const { status } = authService.register(user)
+        const { status } = await authService.register(user)
         if (status == 200) router.push('/login')
       }
 
