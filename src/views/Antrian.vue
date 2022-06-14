@@ -1,7 +1,7 @@
 <template>
 <Navbar></Navbar>
 <div class="container">
-  <div v-if="authenticated  && terdaftar">
+  <div v-if="authenticated && terdaftar">
     <div class="card border-success px-3 pt-3 pb-1">
       <div class="card-body">
         <p>Nomor antrian Anda</p>
@@ -68,8 +68,9 @@ export default {
         
         const { status } = await userService.daftarAntrian(formInput)
         if (status == 201) {
-          this.$router.push('/')
+          this.terdaftar = true
         }
+        
       },
       formatDateNow() {
         let date = new Date()
@@ -90,11 +91,18 @@ export default {
       }
     },
     async beforeMount() {
-      const { nomor, polis } = await rsService.getAntrian()
-      this.nomorAntrian = nomor
+      const polis = await rsService.getPoli();
       this.antrianPoli = polis
 
-      this.user = this.$store.state.user
+
+      const { nomor } = await rsService.getAntrian()
+      this.nomorAntrian = nomor.map(el => {
+        return {
+          nomor: el == null ? '' : el.nomor
+        }
+      })
+      
+      this.user = this.$store.state.user;
 
       const { status, data } = await userService.getAntrianUser()
       this.tanggal = this.formatDateNow()
@@ -104,13 +112,6 @@ export default {
         this.terdaftar = true
       }
 
-    },
-    async mounted() {
-      const { nomor, polis } = await rsService.getAntrian();
-      this.nomorAntrian = nomor;
-      this.antrianPoli = polis;
-
-      this.user = this.$store.state.user;
     },
 };
 </script>
