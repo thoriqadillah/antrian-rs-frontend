@@ -18,7 +18,7 @@
       <div class="border text-center px-4 py-3 bg-light rounded-5">
         {{ poli.nama_poli }}
       </div>
-      <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index].nomor }}</h2>
+      <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index] != undefined ? nomorAntrian[index].nomor : '' }}</h2>
       <!-- <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ index }}</h2> -->
 
     </div>
@@ -99,6 +99,7 @@ export default {
       this.antrianPoli = polis
 
       const { nomors } = await rsService.getAntrian()
+      console.log(nomors)
       this.nomorAntrian = nomors
       
       this.user = this.$store.state.user;
