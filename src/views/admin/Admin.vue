@@ -49,6 +49,9 @@ export default {
     const {nomors, polis} = await adminService.getAntrian();
     this.nomor = nomors
     this.polis = polis
+
+    let authenticated = this.$store.state.authenticated
+    if (!authenticated) this.$router.replace('/login')
   },
   methods: {
     async selesai(event){
@@ -61,8 +64,7 @@ export default {
        return;
       }
       this.nomor[data.poli_id - 1].nomor = new_nomor.data;
-      
     }    
-  }
+  },
 };
 </script>
