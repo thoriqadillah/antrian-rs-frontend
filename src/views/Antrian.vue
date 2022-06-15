@@ -4,7 +4,7 @@
   <div v-if="authenticated && terdaftar">
     <div class="card border-success px-3 pt-3 pb-1">
       <div class="card-body">
-        <p>Nomor antrian Anda</p>
+        Nomor antrian Anda
         <h2 class="fw-bolder" >{{ antrianUser }}</h2>
         <p>untuk {{ tanggal }}</p>
         <div class="text-end">
@@ -19,6 +19,8 @@
         {{ poli.nama_poli }}
       </div>
       <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ nomorAntrian[index].nomor }}</h2>
+      <!-- <h2 class="text-center px-4 py-5 bg-light mt-3 rounded-5">{{ index }}</h2> -->
+
     </div>
     
     <div v-if="!terdaftar">
@@ -69,6 +71,8 @@ export default {
         const { status } = await userService.daftarAntrian(formInput)
         if (status == 201) {
           this.terdaftar = true
+          const { data } = await userService.getAntrianUser()
+          this.antrianUser = `${data.data.loket} : ${data.data.nomor}`
         }
         
       },
@@ -94,20 +98,14 @@ export default {
       const polis = await rsService.getPoli();
       this.antrianPoli = polis
 
-
-      const { nomor } = await rsService.getAntrian()
-      this.nomorAntrian = nomor.map(el => {
-        return {
-          nomor: el == null ? '' : el.nomor
-        }
-      })
+      const { nomors } = await rsService.getAntrian()
+      this.nomorAntrian = nomors
       
       this.user = this.$store.state.user;
 
       const { status, data } = await userService.getAntrianUser()
       this.tanggal = this.formatDateNow()
       if (status == 200 && data.data.length != 0) {
-        console.log(data.data)
         this.antrianUser = `${data.data.loket} : ${data.data.nomor}`
         this.terdaftar = true
       }

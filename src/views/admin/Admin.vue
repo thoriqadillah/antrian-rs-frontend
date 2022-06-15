@@ -46,8 +46,8 @@ export default {
     };
   },
   async mounted() {
-    const {nomor, polis} = await adminService.getAntrian();
-    this.nomor = nomor
+    const {nomors, polis} = await adminService.getAntrian();
+    this.nomor = nomors
     this.polis = polis
   },
   methods: {
